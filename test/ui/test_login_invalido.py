@@ -1,8 +1,14 @@
-def test_login(driver):
-    driver.get("https://example.com")
-    assert False  # Forzamos fallo para probar la captura
+import pytest
+from pages.login_page import LoginPage
 
+class TestLoginNegativo:
 
+    def test_login_credenciales_invalidas(self, driver):
+        login = LoginPage(driver)
+        login.abrir()
 
-#hacer casos negativos
+        login.login_con_datos("usuario_falso", "password_invalido")
 
+        error = login.obtener_mensaje_error()
+
+        assert "Epic sadface" in error

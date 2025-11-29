@@ -12,20 +12,27 @@ def driver():
 
 
 
-# Carpeta para guardar capturas
-os.makedirs("screenshots", exist_ok=True)
+# Crear ruta absoluta a la carpeta screenshots
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SCREENSHOTS_DIR = os.path.join(BASE_DIR, "screenshots")
+os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    # Ejecuta el test
     outcome = yield
     result = outcome.get_result()
 
-    # Si el test falla y tiene fixture 'driver'
     if result.when == "call" and result.failed:
-        driver = item.funcargs.get("driver")
+        driver = item.funcargs.get("driver", None)
+
         if driver:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"screenshots/{item.name}_{timestamp}.png"
-            driver.save_screenshot(filename)
-            print(f"\n[SCREENSHOT] Captura guardada en: {filename}")
+            filename = os.path.join(
+                SCREENSHOTS_DIR, f"{item.name}_{timestamp}.png"
+            )
+
+            try:
+                driver.save_screenshot(filename)
+                print(f"\n📸 Screenshot guardado en: {filename}")
+            except Exception as e:
+                print(f"\n⚠ No se pudo guardar screenshot: {e}")
