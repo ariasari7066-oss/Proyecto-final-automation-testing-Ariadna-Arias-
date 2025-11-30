@@ -2,6 +2,7 @@ import pytest
 from utils.helpers import get_driver
 import os
 from datetime import datetime
+from utils.logger import get_logger
 
 @pytest.fixture
 def driver():
@@ -12,7 +13,7 @@ def driver():
 
 
 
-# Crear ruta absoluta a la carpeta screenshots
+# Captura Automática de Screenshots
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCREENSHOTS_DIR = os.path.join(BASE_DIR, "screenshots")
 os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
@@ -33,6 +34,17 @@ def pytest_runtest_makereport(item, call):
 
             try:
                 driver.save_screenshot(filename)
-                print(f"\n📸 Screenshot guardado en: {filename}")
+                print(f"\n Screenshot guardado en: {filename}")
             except Exception as e:
                 print(f"\n⚠ No se pudo guardar screenshot: {e}")
+
+
+
+@pytest.fixture
+def logger(request):
+    """
+    Fixture que devuelve un logger único por cada test.
+    `request.node.name` es el nombre del test actual.
+    """
+    test_name = request.node.name
+    return get_logger(test_name)
