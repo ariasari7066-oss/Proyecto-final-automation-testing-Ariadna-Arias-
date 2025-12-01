@@ -2,6 +2,7 @@ from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 
 def test_login_exitoso(driver, logger):
+    """Login con credenciales válidas"""
     logger.info("Inicio del test de login exitoso") #LOGGER
 
     login = LoginPage(driver)

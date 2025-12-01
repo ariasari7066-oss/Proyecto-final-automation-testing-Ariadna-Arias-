@@ -4,6 +4,7 @@ from pages.login_page import LoginPage
 class TestLoginNegativo:
 
     def test_login_credenciales_invalidas(self, driver):
+        """Login con credenciales invalidas"""
         login = LoginPage(driver)
         login.abrir()
 

@@ -6,6 +6,7 @@ datos = leer_csv_login("data/data_login.csv")
 
 @pytest.mark.parametrize("usuario, clave, debe_funcionar", datos)
 def test_login_parametrizado(driver, usuario, clave, debe_funcionar):
+    """Login con datos parametrizados en csv"""
     login = LoginPage(driver)
     login.abrir()
     

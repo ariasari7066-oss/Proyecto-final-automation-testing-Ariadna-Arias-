@@ -4,6 +4,7 @@ from pages.cart_page import CartPage
 
 
 def test_carrito(driver):
+    """Test carrito de compras"""
     # Login
     login = LoginPage(driver)
     login.abrir()

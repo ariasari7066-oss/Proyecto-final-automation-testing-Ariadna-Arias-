@@ -12,18 +12,20 @@ def get_logger(test_name):
         f"{test_name}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log"
     )
 
-    logger = logging.getLogger(test_name)
+    # Crear SIEMPRE un logger nuevo, sin reusar handlers
+    logger = logging.getLogger(f"{test_name}_{datetime.now().timestamp()}")
     logger.setLevel(logging.DEBUG)
 
-    if not logger.hasHandlers():
-        fh = logging.FileHandler(log_file, mode="w")
-        fh.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
-        fh.setLevel(logging.DEBUG)
-        logger.addHandler(fh)
+    # File handler
+    fh = logging.FileHandler(log_file, mode="w", encoding="utf-8")
+    fh.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    fh.setLevel(logging.DEBUG)
+    logger.addHandler(fh)
 
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
-        ch.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
-        logger.addHandler(ch)
+    # Consola handler
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    ch.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+    logger.addHandler(ch)
 
     return logger
