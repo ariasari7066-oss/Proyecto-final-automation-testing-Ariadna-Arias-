@@ -1,0 +1,5 @@
+2025-12-03 15:16:19,968 - INFO - Inicio del test de login exitoso
+2025-12-03 15:16:19,968 - INFO - Abriendo la página de login
+2025-12-03 15:16:20,843 - INFO - Realizando login con usuario y contraseña válidos
+2025-12-03 15:16:21,179 - INFO - Se obtuvo el título de la página: 'Products'
+2025-12-03 15:16:21,179 - INFO - Test finalizado correctamente
